@@ -1,0 +1,88 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+    <div class="row">
+    {% if all_templates %}
+        {% for template in all_templates %}
+        <div class="col-sm-6 col-md-4">
+                <div class="card">
+                    <div class="card-header">
+                    {{ template.name }}
+                        <div class="card-actions">
+                            <a href="#" data-toggle="modal" data-target="#template{{ template.id }}" class="btn"><i class="icon-eye"></i></a>
+                            <a href="{{ template.original_file.url }}" target="_blank"><i class="icon-cloud-download"></i></a>
+                            <a href="/templates/delete?id={{ template.id }}" class="btn" style="color:red;"><i class="icon-trash"></i></a>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                    {{ template.description }}
+                    </div>
+                </div>
+        </div>
+
+            <div class="modal fade" id="template{{ template.id }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">{{ template.name }}</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+
+                    <div class="modal-body">
+                        <textarea disabled class="form-control" style="width: 100%;" rows="30">{{ template.text_content }}</textarea>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+        {% endfor %}
+    </div>
+    {% else %}
+        <p>No templates are available.</p>
+    {% endif %}
+
+    <div class="modal fade" id="largeModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Upload a new contract template</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+
+                    <div class="modal-body">
+                        <form method="post" id="form" enctype='multipart/form-data' novalidate>
+                            {% csrf_token %}
+                            {% crispy form %}
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary" onclick="$('#form').submit();">Submit</button>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block breadcrumb %}
+        <li class="breadcrumb-item">Satori</li>
+        <li class="breadcrumb-item active">Templates</li>
+        <li class="breadcrumb-item">
+            <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#largeModal">
+                Upload new template
+            </button>
+        </li>
+{% endblock %}
