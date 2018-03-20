@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from .models import ContractTemplate, ContractTemplateForm
-from django.http import HttpResponseRedirect, HttpResponse
-import mammoth
+from django.http import HttpResponseRedirect
+from mammoth import extract_raw_text
 
 
 # Create your views here.
@@ -14,7 +14,7 @@ def index(request):
 
             # process the form data to extract the word document text
 
-            obj.text_content = mammoth.extract_raw_text(obj.original_file).value
+            obj.text_content = extract_raw_text(obj.original_file).value
             obj.save()
 
             return HttpResponseRedirect('/templates')

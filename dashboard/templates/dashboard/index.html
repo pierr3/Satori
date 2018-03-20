@@ -1,0 +1,104 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="card-group mb-4">
+    <div class="card">
+        <div class="card-body">
+        <div class="h1 text-muted text-right mb-4">
+        <i class="icon-docs"></i>
+        </div>
+        <div class="h4 mb-0">637</div>
+        <small class="text-muted text-uppercase font-weight-bold">Contracts reviewed</small>
+        <div class="progress progress-xs mt-3 mb-0">
+        <div class="progress-bar bg-info" role="progressbar" style="width: 65%" aria-valuenow="65" aria-valuemin="0" aria-valuemax="100"></div>
+        </div>
+        </div>
+    </div>
+    <div class="card">
+        <div class="card-body">
+        <div class="h1 text-muted text-right mb-4">
+        <i class="icon-user-follow"></i>
+        </div>
+        <div class="h4 mb-0">28</div>
+        <small class="text-muted text-uppercase font-weight-bold">New Contracts</small>
+        <div class="progress progress-xs mt-3 mb-0">
+        <div class="progress-bar bg-success" role="progressbar" style="width: 25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+        </div>
+        </div>
+    </div>
+    <div class="card">
+        <div class="card-body">
+        <div class="h1 text-muted text-right mb-4">
+        <i class="icon-pie-chart"></i>
+        </div>
+        <div class="h4 mb-0">88%</div>
+        <small class="text-muted text-uppercase font-weight-bold">Automatically reviewed</small>
+        <div class="progress progress-xs mt-3 mb-0">
+        <div class="progress-bar" role="progressbar" style="width: 88%" aria-valuenow="88" aria-valuemin="0" aria-valuemax="100"></div>
+        </div>
+        </div>
+    </div>
+    <div class="card">
+        <div class="card-body">
+        <div class="h1 text-muted text-right mb-4">
+        <i class="icon-speedometer"></i>
+        </div>
+        <div class="h4 mb-0">3 minutes</div>
+        <small class="text-muted text-uppercase font-weight-bold">Avg. Review Time</small>
+        <div class="progress progress-xs mt-3 mb-0">
+        <div class="progress-bar bg-danger" role="progressbar" style="width: 78%" aria-valuenow="78" aria-valuemin="0" aria-valuemax="100"></div>
+        </div>
+        </div>
+    </div>
+</div>
+    <div class="row">
+
+
+<div class="col-6 col-lg-3">
+<div class="card">
+<div class="card-body p-0 clearfix">
+<i class="fa fa-cogs bg-primary p-4 px-5 font-2xl mr-3 float-left"></i>
+<div class="h5 text-primary mb-0 pt-3">$1.999,50</div>
+<div class="text-muted text-uppercase font-weight-bold font-xs">Budget spent</div>
+</div>
+</div>
+</div>
+
+<div class="col-6 col-lg-3">
+<div class="card">
+<div class="card-body p-0 clearfix">
+<i class="fa fa-laptop bg-info p-4 px-5 font-2xl mr-3 float-left"></i>
+<div class="h5 text-info mb-0 pt-3">765 hours</div>
+<div class="text-muted text-uppercase font-weight-bold font-xs">Time saved</div>
+</div>
+</div>
+</div>
+
+<div class="col-6 col-lg-3">
+<div class="card">
+<div class="card-body p-0 clearfix">
+<i class="fa fa-hdd-o bg-warning p-4 px-5 font-2xl mr-3 float-left"></i>
+<div class="h5 text-warning mb-0 pt-3">1789</div>
+<div class="text-muted text-uppercase font-weight-bold font-xs">Store contracts</div>
+</div>
+</div>
+</div>
+
+<div class="col-6 col-lg-3">
+<div class="card">
+<div class="card-body p-0 clearfix">
+<i class="fa fa-bell bg-danger p-4 px-5 font-2xl mr-3 float-left"></i>
+<div class="h5 text-danger mb-0 pt-3">11</div>
+<div class="text-muted text-uppercase font-weight-bold font-xs">Pending contracts</div>
+</div>
+</div>
+</div>
+
+</div>
+
+{% endblock %}
+
+{% block breadcrumb %}
+    <li class="breadcrumb-item">Satori</li>
+    <li class="breadcrumb-item active">Dashboard</li>
+{% endblock %}
