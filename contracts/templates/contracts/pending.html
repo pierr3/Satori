@@ -23,7 +23,7 @@
         <td>{{ contract.version_set.last.updated_at }}</td>
         <td><span class="badge badge-warning">Pending</span></td>
         <td>
-            Action
+            <a href="/contracts/view/{{ contract.id }}" class="btn btn-sm btn-primary">View</a>
         </td>
     </tr>
     {% endfor %}

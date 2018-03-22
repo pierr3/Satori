@@ -12,7 +12,8 @@ def create(request):
             # Create an empty version
             contract = form.save()
 
-            Version.create_from_template(request.POST.get('template_id'), contract)
+            version = Version.create_from_template(request.POST.get('template_id'), contract)
+            version.save()
 
             form = ContractForm()
 
@@ -28,3 +29,9 @@ def pending(request):
     context = {'contracts': Contract.objects.filter(signed=False).all()}
 
     return render(request, 'contracts/pending.html', context)
+
+
+def view(request, contract_id):
+    context = {'contract': Contract.objects.get(pk=contract_id)}
+
+    return render(request, 'contracts/view.html', context)

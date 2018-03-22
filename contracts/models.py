@@ -24,8 +24,8 @@ class Version(models.Model):
     @classmethod
     def create_from_template(cls, template_id, contract):
         template = ContractTemplate.objects.get(pk=template_id)
-        book = cls(text=template.text_content, file=template.original_file, contract=contract)
-        return book
+        version = cls(text=template.text_content, file=template.original_file, contract=contract)
+        return version
 
 
 class Amendment(models.Model):
