@@ -1,0 +1,12 @@
+.contract-text {
+    overflow: auto;
+    max-height: calc(100vh - 200px);
+    width:100%;
+    margin: 0;
+    padding: 0;
+    text-align: justify;
+}
+
+mark {
+    background-color: yellow;
+}
