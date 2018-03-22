@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+    <div class="card">
+    <div class="card-header">
+    <i class="fa fa-align-justify"></i> Striped Table
+    </div>
+    <div class="card-body">
+    <table class="table table-responsive-sm table-striped">
+    <thead>
+        <tr>
+        <th>Contract name</th>
+        <th>Last updated</th>
+        <th>Status</th>
+        <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for contract in contracts %}
+    <tr>
+        <td>{{ contract.name }}</td>
+        <td>{{ contract.version_set.last.updated_at }}</td>
+        <td><span class="badge badge-warning">Pending</span></td>
+        <td>
+            Action
+        </td>
+    </tr>
+    {% endfor %}
+
+
+    </tbody>
+    </table>
+    </div>
+</div>
+{% endblock %}
+
+{% block breadcrumb %}
+    <li class="breadcrumb-item">Satori</li>
+    <li class="breadcrumb-item">Contracts</li>
+    <li class="breadcrumb-item active">Pending</li>
+{% endblock %}

@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+<div class="card">
+    <div class="card-header">
+    <strong>New Contract</strong>
+    Form
+    </div>
+    <div class="card-body">
+        <form method="post" id="form">
+            {% csrf_token %}
+            {% crispy form %}
+        </form>
+    </div>
+    <div class="card-footer">
+    <button type="submit" class="btn btn-sm btn-primary" onclick="$('#form').submit();"><i class="fa fa-dot-circle-o"></i> Submit</button>
+    <button type="reset" class="btn btn-sm btn-danger"><i class="fa fa-ban"></i> Reset</button>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block breadcrumb %}
+    <li class="breadcrumb-item">Satori</li>
+    <li class="breadcrumb-item">Contracts</li>
+    <li class="breadcrumb-item active">Create</li>
+{% endblock %}
