@@ -12,6 +12,14 @@
         {{ changes_display }}
     {% endautoescape %}
     </div>
+
+    <!-- Little hack for the style of the aside bar-->
+    <style>
+        .aside-menu {
+            overflow-y: auto;
+            height: calc(100vh - 100px);
+        }
+    </style>
 {% endblock %}
 
 {% block aside-menu %}
