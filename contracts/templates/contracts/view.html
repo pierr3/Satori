@@ -9,7 +9,7 @@
     {% endif %}
     <div class="contract-text">
     {% autoescape off %}
-        {{ changes_display|linebreaks }}
+        {{ changes_display }}
     {% endautoescape %}
     </div>
 {% endblock %}
@@ -103,5 +103,8 @@
 
     <script>
         $("body").removeClass("aside-menu-hidden");
+        $(document).ready(function(){
+            $('[data-toggle="popover"]').popover()
+        })
     </script>
 {% endblock %}

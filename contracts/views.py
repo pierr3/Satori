@@ -41,24 +41,36 @@ def insert_html(string, index, insertion):
 
 
 def build_changes_display(display_version):
+    # Html stuff
     html_mark_open = "<mark>"
     html_mark_close = "</mark>"
+
+    html_tooltip_deleted = '&nbsp;<button type="button" class="btn btn-sm btn-danger" data-container="body" data-toggle="popover"' + \
+                           'data-placement="top" data-content="<<change>>" data-original-title="" title="">' + \
+                           '<i class="fa fa-times-circle-o"></i></button>&nbsp;'
 
     output = display_version().text
 
     index_offset = 0
 
     for amendment in display_version().amendment_set.all():
+        # If the amendment is not pending, we don't show it
         if not amendment.pending:
             pass
 
+        # If the amendment contains a new version, aka, not just a deletion
         if len(amendment.amended) != 0:
-            output = insert_html(output, amendment.start_position+index_offset, html_mark_open)
+            output = insert_html(output, amendment.start_position + index_offset, html_mark_open)
             index_offset += len(html_mark_open)
             output = insert_html(output, amendment.end_position + index_offset, html_mark_close)
             index_offset += len(html_mark_close)
+        else:
+            # If the amendment is just a deletion
+            tooltip = html_tooltip_deleted.replace('<<change>>', amendment.original)
+            output = insert_html(output, amendment.start_position + index_offset, tooltip)
+            index_offset += len(tooltip)
 
-    return output
+    return output.replace("\n", "<br>")
 
 
 def view(request, contract_id, contract_version=0):
@@ -118,7 +130,6 @@ def make_amendments(contract, new_version):
             print("next", length, "characters are added")
             # Some text is added, we save it either way, and check if we were working
             new_text = new_version.text[cursor_new:cursor_new+length]
-            print(str(cursor_new)+":"+str(length))
             if working:
                 # If we were working, we save the old changed text
                 Amendment.create_and_save(new_version, old_text_temp, new_text, cursor_new, cursor_new+length)
