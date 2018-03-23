@@ -49,11 +49,11 @@ def build_changes_display(display_version):
                            'data-placement="top" data-content="<<change>>" data-original-title="" title="">' + \
                            '<i class="fa fa-times-circle-o"></i></button>&nbsp;'
 
-    output = display_version().text
+    output = display_version.text
 
     index_offset = 0
 
-    for amendment in display_version().amendment_set.all():
+    for amendment in display_version.amendment_set.all():
         # If the amendment is not pending, we don't show it
         if not amendment.pending:
             pass
@@ -76,7 +76,7 @@ def build_changes_display(display_version):
 def view(request, contract_id, contract_version=0):
     contract = Contract.objects.get(pk=contract_id)
 
-    display_version = contract.version_set.last
+    display_version = contract.version_set.last()
     if contract_version != 0:
         display_version = contract.version_set.get(pk=contract_version)
 
