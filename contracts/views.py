@@ -36,6 +36,18 @@ def pending(request):
     return render(request, 'contracts/pending.html', context)
 
 
+def stored(request):
+    context = {'contracts': Contract.objects.filter(signed=True).all()}
+
+    return render(request, 'contracts/stored.html', context)
+
+
+def sign(request, contract_id):
+    Contract.objects.select_for_update().filter(id=contract_id).update(signed=True)
+
+    return render(request, 'contracts/docusign.html', {'contract_id': contract_id})
+
+
 def insert_html(string, index, insertion):
     return string[:index] + insertion + string[index:]
 

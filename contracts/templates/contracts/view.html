@@ -2,11 +2,18 @@
 {% load crispy_forms_tags %}
 
 {% block content %}
+    {% if contract.signed %}
+        <div class="alert alert-success" role="alert">
+            This a <b>signed</b> document, no edition is possible.
+        </div>
+    {% endif %}
+
     {% if display_version.id != contract.version_set.last.id %}
         <div class="alert alert-warning" role="alert">
             This is not the latest version of this document, you are currently viewing the version uploaded on <b>{{ display_version.created_at }}</b>
         </div>
     {% endif %}
+
     <div class="contract-text">
     {% autoescape off %}
         {{ changes_display }}
@@ -70,21 +77,25 @@
     <li class="breadcrumb-item">Satori</li>
     <li class="breadcrumb-item">Contracts</li>
     <li class="breadcrumb-item active">{{ contract.name }}</li>
+    {% if not contract.signed %}
     <li class="breadcrumb-item">
         <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#uploadModal">
             <i class="fa fa-upload"></i> Upload new version
         </button>
     </li>
+    {% endif %}
     <li class="breadcrumb-item">
         <a href="{{ display_version.file.url }}" class="btn btn-secondary btn-sm">
             <i class="fa fa-download"></i> Download this version
         </a>
     </li>
+    {% if not contract.signed %}
     <li class="breadcrumb-item">
-        <button type="button" class="btn btn-success btn-sm">
+        <a href="/contracts/sign/{{ contract.id }}" class="btn btn-success btn-sm">
             <i class="fa fa-check-circle"></i> Send for signature
-        </button>
+        </a>
     </li>
+    {% endif %}
 {% endblock %}
 
 {% block scripts %}
