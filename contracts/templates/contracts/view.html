@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% load crispy_forms_tags %}
+{% load contracts_extra %}
 
 {% block content %}
     {% if contract.signed %}
@@ -32,45 +33,61 @@
 {% block aside-menu %}
     <ul class="nav nav-tabs" role="tablist">
         <li class="nav-item">
-        <a class="nav-link active" data-toggle="tab" href="#timeline" role="tab"><i class="icon-list"></i></a>
+        <a class="nav-link active" data-toggle="tab" href="#timeline" role="tab"><i class="icon-info"></i></a>
          </li>
         <li class="nav-item">
-        <a class="nav-link" data-toggle="tab" href="#settings" role="tab"><i class="icon-settings"></i></a>
+        <a class="nav-link" data-toggle="tab" href="#amendments" role="tab"><i class="icon-list"></i></a>
         </li>
     </ul>
     <div class="tab-content">
         <div class="tab-pane active" id="timeline" role="tabpanel">
-        <div class="callout m-0 py-2 text-muted text-center bg-light text-uppercase">
-            <small><b>Document Information</b></small>
-        </div>
+            <div class="callout m-0 py-2 text-muted text-center bg-light text-uppercase">
+                <small><b>Document Information</b></small>
+            </div>
 
-        <div style="padding: 5px">
-            <h6>{{ contract.name }}</h6>
-            <small class="text-muted">{{ contract.summary }}</small>
-        </div>
+            <div style="padding: 5px">
+                <h6>{{ contract.name }}</h6>
+                <small class="text-muted">{{ contract.summary }}</small>
+            </div>
 
-        <hr class="transparent mx-3 my-0">
-        <div class="callout m-0 py-2 text-muted text-center bg-light text-uppercase">
-            <small><b>Version History</b></small>
+            <hr class="transparent mx-3 my-0">
+            <div class="callout m-0 py-2 text-muted text-center bg-light text-uppercase">
+                <small><b>Version History</b></small>
+            </div>
+            <hr class="transparent mx-3 my-0">
+            {% for version in versions %}
+                <hr class="mx-3 my-0">
+                <a href="/contracts/view/{{ contract.pk }}/version/{{ version.pk }}"><div class="callout callout-info m-0 py-3">
+                    <div class="float-right" style="font-size: 32px">
+                        <i class="fa fa-file-text"></i>
+                    </div>
+                    <div>Submitted by
+                        <strong>{{ version.uploaded_by }}</strong>
+                    </div>
+                    <small class="text-muted mr-3"><i class="icon-calendar"></i>&nbsp; {{ version.created_at }}</small>
+                </div></a>
+            {% endfor %}
         </div>
-        <hr class="transparent mx-3 my-0">
-        {% for version in versions %}
-            <hr class="mx-3 my-0">
-            <a href="/contracts/view/{{ contract.pk }}/version/{{ version.pk }}"><div class="callout callout-info m-0 py-3">
-                <div class="float-right" style="font-size: 32px">
-                    <i class="fa fa-file-text"></i>
-                </div>
-                <div>Submitted by
-                    <strong>{{ version.uploaded_by }}</strong>
-                </div>
-                <small class="text-muted mr-3"><i class="icon-calendar"></i>&nbsp; {{ version.created_at }}</small>
-            </div></a>
-        {% endfor %}
-        </div>
-        <div class="tab-pane p-3" id="settings" role="tabpanel">
-
+        <div class="tab-pane" id="amendments" role="tabpanel">
+            <div class="callout m-0 py-2 text-muted text-center bg-light text-uppercase">
+                <small><b>Pending Amendments</b></small>
+            </div>
+            <hr class="transparent mx-3 my-0">
+            {% for amendment in amendments %}
+                <hr class="mx-3 my-0">
+                 <a href="#{{ amendment.id }}"><div class="callout callout-info m-0 py-3">
+                    <div class="float-right" style="color: {{ amendment.risk_value|riskcolor }};font-size: 32px">
+                        <i class="fa fa-floppy-o"></i>
+                    </div>
+                    <div>Change
+                        <strong>#{{ amendment.id }}</strong>
+                    </div>
+                    <small class="text-muted mr-3"><i class="icon-speedometer"></i>&nbsp;Risk Value: {{ amendment.risk_value }}%</small>
+                 </div></a>
+            {% endfor %}
         </div>
     </div>
+
 {% endblock %}
 
 {% block breadcrumb %}
@@ -93,6 +110,13 @@
     <li class="breadcrumb-item">
         <a href="/contracts/sign/{{ contract.id }}" class="btn btn-success btn-sm">
             <i class="fa fa-check-circle"></i> Send for signature
+        </a>
+    </li>
+    {% endif %}
+    {% if not contract.signed %}
+    <li class="breadcrumb-item">
+        <a href="mailto:test@test.com" class="btn btn-light btn-sm">
+            <i class="fa fa-envelope-open"></i> Email to client
         </a>
     </li>
     {% endif %}
@@ -123,7 +147,14 @@
     <script>
         $("body").removeClass("aside-menu-hidden");
         $(document).ready(function(){
-            $('[data-toggle="popover"]').popover()
+            $('[data-toggle="popover"]').popover({
+                html: true,
+                content: function() {
+                    var content = $(this).data('content');
+                    var $content = $(content);
+                    return $content.length > 0 ? $content.html() : '';
+                }
+            });
         })
     </script>
 {% endblock %}

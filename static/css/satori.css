@@ -8,5 +8,9 @@
 }
 
 mark {
-    background-color: #f9fca7;
+    cursor: pointer;
+}
+
+mark.deleted {
+    background-color: #ff8784;
 }
