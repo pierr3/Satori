@@ -12,5 +12,9 @@ mark {
 }
 
 mark.deleted {
-    background-color: #ff8784;
+    text-decoration: line-through;
+}
+
+mark span {
+    text-decoration: line-through;
 }
