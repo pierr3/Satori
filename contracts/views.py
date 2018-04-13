@@ -48,7 +48,7 @@ def sign(request, contract_id):
     return render(request, 'contracts/docusign.html', {'contract_id': contract_id})
 
 
-def build_changes_display(display_version):
+def build_changes_display(request, display_version):
     # Html stuff
     html_tooltip_deleted = '&nbsp;<mark class="deleted" style="background-color:{{color}};" data-container="body"' \
                            'data-toggle="popover" data-placement="top" data-content="{{content}}"' \
@@ -79,13 +79,23 @@ def build_changes_display(display_version):
                 content_change = "Risk Value:</b> %s/100<br><br>" % amendment.risk_value
                 title = "Text Addition #%s" % amendment.id
 
-            if amendment.risk_value > 70:
+            if amendment.risk_value == 100 and request.session.get('role') != 'lawyer':
+                content_change += "<div class='alert alert-danger' role='alert'><b>This change has been " \
+                                  "rejected automatically</b></div>"
+            elif amendment.risk_value == 100 and request.session.get('role') == 'lawyer':
+                    content_change += "<div class='alert alert-danger' role='alert'><b>This change has been " \
+                                      "rejected automatically, you can still override this decision below</b></div>" \
+                                      "<button class='btn btn-sm btn-warning'>Override & Accept</button>"
+            elif amendment.risk_value > 60 and request.session.get('role') != 'lawyer':
                 content_change += "<div class='alert alert-warning' role='alert'><b>This change has been " \
                                   "escalated</b></div> "
-            else:
+            elif request.session.get('role') != 'lawyer':
                 content_change += "<button class='btn btn-sm btn-success'>Accept</button>&nbsp;<button class='btn " \
                                   "btn-sm btn-warning'>Escalate</button>&nbsp;<button class='btn btn-sm " \
                                   "btn-danger'>Reject</button> "
+            else:
+                content_change += "<button class='btn btn-sm btn-success'>Accept</button>&nbsp;" \
+                                  "<button class='btn btn-sm btn-danger'>Reject</button> "
 
             if len(amendment.original) != 0:
                 original_text = "[" + amendment.original + "]"
@@ -129,7 +139,7 @@ def view(request, contract_id, contract_version=0):
     upload_version_form = VersionForm()
 
     context = {'contract': contract, 'display_version': display_version,
-               'changes_display': build_changes_display(display_version),
+               'changes_display': build_changes_display(request, display_version),
                'versions': contract.version_set.order_by('-created_at'),
                'amendments': display_version.amendment_set.filter(pending=True),
                'upload_version_form': upload_version_form}

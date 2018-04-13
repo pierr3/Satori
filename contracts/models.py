@@ -89,12 +89,13 @@ class ContractForm(ModelForm):
             'name': TextInput(attrs={'class': 'form-control'}),
             'summary': Textarea(attrs={'cols': 80, 'rows': 5, 'class': 'form-control'}),
             'importance': Select(choices=((1, 'Low'), (2, 'Medium'), (3, 'High')), attrs={'class': 'form-control'}),
-            'value': TextInput(attrs={'class': 'form-control'}),
+            'value': Select(choices=((1, '< £20,000'), (2, '£20,000 to £100,000'), (3, '£100,000 to £500,000'),
+                                     (4, '> £500,000')), attrs={'class': 'form-control'}),
         }
         labels = {
             'name': 'Name of the contract',
             'summary': 'Description of this contract',
-            'importance': 'Rate the importance of the contract for your company',
-            'value': 'Estimate the monetary value of the contract in £',
+            'importance': 'Rate the importance of this contract overall for the company',
+            'value': 'Estimate the monetary value of the contract',
         }
 

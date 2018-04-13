@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from .models import ContractTemplate, ContractTemplateForm
+from .models import ContractTemplate, ContractTemplateForm, ContractCategory
 from django.http import HttpResponseRedirect
 from mammoth import extract_raw_text
 
@@ -21,8 +21,8 @@ def index(request):
     else:
         form = ContractTemplateForm()
 
-    all_templates = ContractTemplate.objects.order_by('-created_at')
-    context = {'all_templates': all_templates, 'form': form}
+    categories = ContractCategory.objects.all()
+    context = {'categories': categories, 'form': form}
 
     return render(request, 'templateStorage/index.html', context)
 

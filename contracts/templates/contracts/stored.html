@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load contracts_extra %}
 
 {% block content %}
 
@@ -13,7 +14,7 @@
         <th>Contract name</th>
         <th>Last updated</th>
         <th>Status</th>
-        <th>Action</th>
+        <th>Tags</th>
         </tr>
     </thead>
     <tbody>
@@ -21,7 +22,7 @@
     <tr>
         <td>{{ contract.name }}</td>
         <td>{{ contract.version_set.last.updated_at }}</td>
-        <td><span class="badge badge-success">Signed</span></td>
+        <td><span class="badge badge-dark">{% random_tag %}</span></td>
         <td>
             <a href="/contracts/view/{{ contract.id }}" class="btn btn-sm btn-primary">View</a>
         </td>
@@ -39,4 +40,7 @@
     <li class="breadcrumb-item">Satori</li>
     <li class="breadcrumb-item">Contracts</li>
     <li class="breadcrumb-item active">Stored</li>
+    <li class="breadcrumb-item">
+        <input type="text" class="form-control-sm" placeholder="Search">
+    </li>
 {% endblock %}

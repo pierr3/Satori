@@ -44,12 +44,13 @@
     <button class="navbar-toggler mobile-sidebar-toggler d-lg-none" type="button">☰</button>
     <a class="navbar-brand" style="background-image: url(/static/common/satoriLogo.png);background-size: 100px auto;" href="#"></a>
     <ul class="nav navbar-nav d-md-down-none">
+        <li class="nav-item">
+         <a href="/change_role"><b>Role: </b> {% if request.session.role == 'lawyer' %} Head Legal {% else %} Sourcing Team {% endif %}</a>
+      </li>
       <li class="nav-item">
         <a class="nav-link navbar-toggler sidebar-toggler" href="#">☰</a>
       </li>
-      <li class="nav-item">
-        <a class="nav-link" href="#">...</a>
-      </li>
+
     </ul>
   </header>
   <div class="app-body">
@@ -86,11 +87,11 @@
   </footer>
 
   <!-- Bootstrap and necessary plugins -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.3/js/tether.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/js/bootstrap.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/pace/1.0.2/pace.min.js"></script>
+  <script src="{% static "common/js/jquery.min.js" %}"></script>
+  <script src="{% static "common/js/tether.min.js" %}"></script>
+  <script src="{% static "common/js/popper.min.js" %}"></script>
+  <script src="{% static "common/js/bootstrap.min.js" %}"></script>
+  <script src="{% static "common/js/pace.min.js" %}"></script>
 
   <!-- Main scripts -->
   <script src="{% static "common/js/app.js" %}"></script>
